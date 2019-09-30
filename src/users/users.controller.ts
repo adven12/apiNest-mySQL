@@ -36,7 +36,7 @@ export class UsersController {
     }
 
     @Post("/signup")
-    registerNewUser(@Req() req: Request, @Res() res: Response): any {
+    registerNewUser(@Req() req: Request, @Res() res: Response): any {       
         return this.usersService.registerNewUser(req, res);
     }
 

@@ -34,9 +34,6 @@ export class users extends Model<users> {
   @Column
   username: string;
 
-  // @Column
-  // age: number;
-
   @Column
   avatar: string;
 

@@ -1,7 +1,6 @@
 import { Injectable, Inject, HttpException, BadRequestException, NotFoundException } from '@nestjs/common';
 import { books } from './books.entity';
 
-
 @Injectable()
 export class BooksService {
   constructor(
@@ -18,9 +17,7 @@ export class BooksService {
   async findOne(req): Promise<books> {
     let book: any = await this.BOOKS_REPOSITORY.findOne<books>({ where: { _id: req.params.id } });
     console.log(book);
-
     return book
-
   }
 
 
@@ -61,13 +58,8 @@ export class BooksService {
         }
       }
     });
-
-
     return books
-
-
   }
-
 
   async postBook(req): Promise<any> {
     console.log('22');

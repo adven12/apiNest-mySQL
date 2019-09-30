@@ -35,8 +35,6 @@ export class AuthService {
   }
 
   async login(req: any, res:any) {
-
-  // const user = await  this.AUTH_REPOSITORY.findOne<users>({  where: { username: req.email } }); 
    
     let permissions: any[] = [];
 
@@ -51,7 +49,6 @@ export class AuthService {
       });
     }))
    
-
     const payload = {
       username: req.username,
       firstName: req.firstName,

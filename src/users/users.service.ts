@@ -118,17 +118,15 @@ export class UsersService {
       _id: null,
       firstName: req.body.name,
       password: await bcrypt.hash(req.body.password, 10),
-      email: req.body.email,
+      username: req.body.email,
       avatar: avatar
     };
-
     try {
-     
-      const matchUser: any = await this.USERS_REPOSITORY.findOne({ where: { email: newUser.email } })
+      const matchUser: any = await this.USERS_REPOSITORY.findOne({ where: { username: newUser.username } })
+      
       if (!matchUser) {        
         await this.USERS_REPOSITORY.create<users>(newUser);
-        const user: any = await this.USERS_REPOSITORY.findOne<users>({ attributes: ['_id'], where: { email: newUser.email } });       
-        
+        const user: any = await this.USERS_REPOSITORY.findOne<users>({ attributes: ['_id'], where: { username: newUser.username } });       
         const newId = user.dataValues._id
         const newRole = {
           users_id: newId,
