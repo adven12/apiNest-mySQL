@@ -1,5 +1,5 @@
 import { Injectable, Inject, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { users, users_roles, roles } from './users.entity';
+import { users, users_roles, roles } from '../entities/users.entity';
 import * as bcrypt from "bcrypt"
 
 
