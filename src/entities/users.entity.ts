@@ -2,20 +2,20 @@ import { Table, Column, Model, DataType, ForeignKey, BelongsToMany, BelongsTo } 
 
 
 @Table
-export class users_roles extends Model<users_roles> {
+export class Users_roles extends Model<Users_roles> {
 
-  @ForeignKey(() => users)
+  @ForeignKey(() => Users)
   @Column
-  users_id: number;
+  users_id: Number;
 
-  @ForeignKey(() => roles)
+  @ForeignKey(() => Roles)
   @Column
-  roles_id: number;
+  roles_id: Number;
 }
 
 
 @Table
-export class users extends Model<users> {
+export class Users extends Model<Users> {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
@@ -23,28 +23,28 @@ export class users extends Model<users> {
     unique: true,
     field: '_id',
   })
-  _id: number;
+  _id: Number;
 
   @Column
-  firstName: string;
+  firstName: String;
 
   @Column
-  password: string;
+  password: String;
 
   @Column
-  username: string;
+  username: String;
 
   @Column
-  avatar: string;
+  avatar: String;
 
 
-  @BelongsToMany(() => roles, () => users_roles)
-  roleId: users_roles[];
+  @BelongsToMany(() => Roles, () => Users_roles)
+  roleId: Users_roles[];
 
 }
 
 @Table
-export class roles extends Model<roles> {
+export class Roles extends Model<Roles> {
 
   @Column({
     type: DataType.INTEGER,
@@ -52,13 +52,13 @@ export class roles extends Model<roles> {
     allowNull: false,
     field: '_id',
   })
-  id: number;
+  id: Number;
 
   @Column
-  roleName: string
+  roleName: String
 
 
-  @BelongsToMany(() => users, () => users_roles)
-  datarole: users[];
+  @BelongsToMany(() => Users, () => Users_roles)
+  dataRole: Users[];
 }
 

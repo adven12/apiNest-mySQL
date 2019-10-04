@@ -10,17 +10,17 @@ export class Book extends Model<Book> {
     unique: true,
     field: '_id',
   })
-  _id: number;
+  _id: Number;
   
   @Column
-  name: string;
+  name: String;
 
   @Column
-  price: number;
+  price: Number;
 
   @Column
-  descript: string;
+  descript: String;
 
   @Column
-  full_descript: string;
+  full_descript: String;
 }

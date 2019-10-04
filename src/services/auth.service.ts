@@ -1,68 +1,73 @@
-import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from "bcrypt"
-import { users, roles } from '../entities/users.entity';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { HttpException } from "@nestjs/common"
-import { ConfigService } from '../environment/config.service';
 import * as jwtr from "jwt-then"
+import { AuthRepository } from '../repositories'
+import { jwtConstants } from '../secrets/jwtSecretKey'
 
 @Injectable()
 export class AuthService {
 
-  private test: any;
-
   public jwtService: JwtService;
 
-  @Inject('AUTH_REPOSITORY') private readonly AUTH_REPOSITORY: typeof users
-
-  constructor(config: ConfigService) {
-
-    this.test = config.get('APP');
-  }
+  constructor(public AuthRepository: AuthRepository) { }
 
   async validateUser(username: string, password: string): Promise<any> {
 
-    const user: any = await this.AUTH_REPOSITORY.findOne<users>({ where: { username: username } })
-    if (!user) {
-      throw new HttpException('User not found', 404);
+    const errorObj = {
+      logErrorUsername: '',
+      logErrorPassword: ''
+    }
+    let stateValid = 0;
+    const passWordExpr = new RegExp(/^[0-9]{3,}$/);
+    const emailRegExpr = new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
+
+    if (!emailRegExpr.test(username)) {
+      errorObj.logErrorUsername = 'Error: uncorrectUsername value!';
+    } else { ++stateValid }
+    if (!passWordExpr.test(password)) {
+      errorObj.logErrorPassword = 'Error: invalid symbol format';
+    } else { ++stateValid }
+
+    if (stateValid !== 2) {
+      throw new HttpException(errorObj, 404);
     }
 
-    const matchPasswords = await bcrypt.compare(password, user.dataValues.password);
+    const user: any = await this.AuthRepository.findOneUsername(username)
+    if (!user) {
+      return null
+    }
+
+    const matchPasswords = await this.AuthRepository.comparePassword(password, user.dataValues.password)
     if (user && matchPasswords) {
       return user.dataValues;
-    } else throw new HttpException('Email or password incorrect', 401);;
-
+    } else return null
   }
 
-  async login(req: any, res:any) {
-   
-    let permissions: any[] = [];
-
-    await this.AUTH_REPOSITORY.findAll<users>({
-      where: { username: req.username },
-      include: [{
-        model: roles,
-      }]
-    }).then((rolen: any) => rolen.forEach(el => {
-      el.roleId.forEach(element => {
-        permissions.push(element.dataValues.roleName);
-      });
-    }))
-   
-    const payload = {
-      username: req.username,
-      firstName: req.firstName,
-      permissions: permissions,
-      id: req._id,
-      password: req.password
-    };
+  public async login(user) {
+    let permissions: any = []; 
+    permissions = await this.AuthRepository.findAllRole(user.username)
     
-   const access_token = await jwtr.sign(payload, "secret")
-   return  res.status(200).send({
+    let isAdmin: boolean = false;
+
+    if(permissions === 'admin') {
+      isAdmin = true
+    }
+
+    const payload = {
+      username: user.username,
+      firstName: user.firstName,
+      id: user._id,
+      password: user.password,
+      isAdmin: isAdmin
+    };    
+    console.log(payload);
+    
+    const accessToken = await jwtr.sign(payload, jwtConstants.secret)
+    return {
       success: true,
-      message: "User Successfully created",
-      token: access_token
-    });
+      token: accessToken
+    }
   }
 
 }

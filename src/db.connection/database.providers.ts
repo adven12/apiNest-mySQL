@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Book } from '../entities/books.entity';
-import { users, users_roles, roles } from '../entities/users.entity';
+import { Users, Users_roles, Roles } from '../entities/users.entity';
 import env from '../environment/config'
 
 export const databaseProviders = [
@@ -18,7 +18,7 @@ export const databaseProviders = [
           timestamps: false
         }
       });
-      sequelize.addModels([Book, users, users_roles, roles]);
+      sequelize.addModels([Book, Users, Users_roles, Roles]);
       await sequelize.sync();
       return sequelize;
     },

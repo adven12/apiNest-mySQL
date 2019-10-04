@@ -1,5 +1,5 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpStatus, HttpException } from '@nestjs/common';
-import  Environments  from './environment/config'
+import  Environments  from '../environment/config'
 @Catch()
 export class ExceptionHandlerFilter implements ExceptionFilter {
     catch(error: Error, host: ArgumentsHost) {
@@ -9,6 +9,7 @@ export class ExceptionHandlerFilter implements ExceptionFilter {
             host: 'listener.logz.io',
             port: '8071'
         });
+        console.log('4');
         let response = host.switchToHttp().getResponse();
 
         let status = (error instanceof HttpException) ?

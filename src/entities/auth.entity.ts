@@ -9,12 +9,12 @@ export class Auth extends Model<Auth> {
     unique: true,
     field: '_id',
   })
-  _id: number;
+  _id: Number;
 
   @Column
-  password: string;
+  password: String;
 
   @Column
-  username: string;
+  username: String;
 
 }
