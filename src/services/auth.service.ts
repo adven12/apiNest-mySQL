@@ -18,6 +18,7 @@ export class AuthService {
       logErrorUsername: '',
       logErrorPassword: ''
     }
+    
     let stateValid = 0;
     const passWordExpr = new RegExp(/^[0-9]{3,}$/);
     const emailRegExpr = new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
@@ -44,10 +45,9 @@ export class AuthService {
     } else return null
   }
 
-  public async login(user) {
+  public async login(user) {  
     let permissions: any = []; 
     permissions = await this.AuthRepository.findAllRole(user.username)
-    
     let isAdmin: boolean = false;
 
     if(permissions === 'admin') {

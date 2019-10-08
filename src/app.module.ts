@@ -6,7 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { authProviders, booksProviders, usersProviders, rolesProviders, usersrolesProviders} from './providers';
 import { AuthService, BooksService, UsersService } from './services';
 import { AuthController, UsersController, BooksController } from './controllers';
-import { LocalStrategy, JwtStrategy } from './common';
+import { LocalStrategy, JwtStrategy, RolesGuard } from './common';
 import { AuthRepository, UsersRepository, UserRolesRepository} from './repositories'
 
 import { jwtConstants } from './secrets/jwtSecretKey';
@@ -35,7 +35,8 @@ import { ConfigModule } from './environment/config.module';
     AuthService,
     ...authProviders,
     ...rolesProviders,
-    ...usersrolesProviders
+    ...usersrolesProviders,
+    RolesGuard
   ]
 }
 )

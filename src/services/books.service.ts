@@ -1,5 +1,6 @@
 import { Injectable, Inject, HttpException, BadRequestException, NotFoundException } from '@nestjs/common';
 import { Book } from '../entities/books.entity';
+import { getToken } from '../common/actions'
 import { BookResponseModel } from '../models/book.models'
 
 @Injectable()
@@ -26,14 +27,18 @@ export class BooksService {
   }
 
   async deleteBook(req): Promise<BookResponseModel> {
-    if(req.params.id){
-      await this.BOOKS_REPOSITORY.destroy({ where: { _id: req.params.id } })
+    // let token = await getToken(req.headers.authorization);
+    // console.log('!!!!!! ',token);
+    // if(token.role == "admin"){      
+      await this.BOOKS_REPOSITORY.destroy({ where: { _id: req.params.id } })      
       return { success: true }
-    }
-
+    // }
 }
 
   async postBook(req): Promise<BookResponseModel> {
+    console.log(req.body)
+    console.log(req.data)
+    
     if (req.body.name) {
       const book = req.body;
       await this.BOOKS_REPOSITORY.create<Book>(book) 
