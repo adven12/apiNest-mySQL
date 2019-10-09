@@ -7,7 +7,7 @@ import { authProviders, booksProviders, usersProviders, rolesProviders, usersrol
 import { AuthService, BooksService, UsersService } from './services';
 import { AuthController, UsersController, BooksController } from './controllers';
 import { LocalStrategy, JwtStrategy, RolesGuard } from './common';
-import { AuthRepository, UsersRepository, UserRolesRepository} from './repositories'
+import { AuthRepository, UsersRepository, UserRolesRepository, BooksRepository} from './repositories'
 
 import { jwtConstants } from './secrets/jwtSecretKey';
 import { ConfigModule } from './environment/config.module';
@@ -26,6 +26,7 @@ import { ConfigModule } from './environment/config.module';
     AuthRepository,
     UsersRepository,
     UserRolesRepository,
+    BooksRepository,
     LocalStrategy,
     JwtStrategy,
     BooksService,

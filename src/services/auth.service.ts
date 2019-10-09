@@ -48,18 +48,13 @@ export class AuthService {
   public async login(user) {  
     let permissions: any = []; 
     permissions = await this.AuthRepository.findAllRole(user.username)
-    let isAdmin: boolean = false;
-
-    if(permissions === 'admin') {
-      isAdmin = true
-    }
 
     const payload = {
       username: user.username,
       firstName: user.firstName,
       id: user._id,
       password: user.password,
-      isAdmin: isAdmin
+      isAdmin: permissions
     };    
     console.log(payload);
     
