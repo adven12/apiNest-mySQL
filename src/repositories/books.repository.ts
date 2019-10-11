@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { Book } from '../entities';
+import { Book, Order } from '../entities';
 
 
 @Injectable()
@@ -22,3 +22,4 @@ export class BooksRepository {
         return this.BOOKS_REPOSITORY.create<Book>(book)
     }
 }
+

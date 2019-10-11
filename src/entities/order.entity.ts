@@ -1,10 +1,10 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
-
 @Table
-export class Book extends Model<Book> {
+export class Order extends Model<Order> {
 
-  @Column({
+  @Column(
+    {
     type: DataType.INTEGER,
     autoIncrement: true,
     primaryKey: true,
@@ -25,4 +25,3 @@ export class Book extends Model<Book> {
   @Column
   full_descript: String;
 }
-

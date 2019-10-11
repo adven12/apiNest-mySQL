@@ -2,13 +2,13 @@ import { Injectable, Inject, HttpException, BadRequestException, NotFoundExcepti
 import { Book } from '../entities/books.entity';
 import { getToken } from '../common/actions'
 import { BookResponseModel } from '../models/book.models'
-import  { BooksRepository} from '../repositories';
+import  { BooksRepository } from '../repositories';
 
 @Injectable()
 export class BooksService {
     // [x: string]: any;
   constructor(
-    public BooksRepository: BooksRepository
+    public BooksRepository: BooksRepository,
    ) { }
 
   async findAll(): Promise<Book[]> {
@@ -45,5 +45,6 @@ export class BooksService {
       return { success: true }
     }
   }
+
 
 }
