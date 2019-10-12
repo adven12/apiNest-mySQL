@@ -7,7 +7,10 @@ import { Order } from '../entities';
 export class OrderBooksRepository {
     @Inject('ORDER_BOOKS_REPOSITORY') public ORDER_BOOKS_REPOSITORY: typeof Order   
     
-    async create(book: Order[]){
-        return await this.ORDER_BOOKS_REPOSITORY.bulkCreate(book)     
+    async create(books: Order[]){                
+        return await this.ORDER_BOOKS_REPOSITORY.bulkCreate(books)     
+    }
+    async findAll(){
+        return  this.ORDER_BOOKS_REPOSITORY.findAll<Order>();
     }
 }

@@ -7,13 +7,18 @@ import { getToken } from '../common/actions';
 import {Roles} from "../common/roles.decorator"
 
 
-@Controller('order')
+@Controller('orders')
 export class OrderController {
     constructor(private readonly orderService: OrderService) { }
 
     @UseGuards(AuthGuard('jwt'))
-    @Post('/order') 
-    postBooks(@Req() req: Request): Promise<any> {   
-        return this.orderService.postBooks(req);
+    @Post() 
+    postBooks(@Req() req: Request): Promise<any> {    
+        return this.orderService.postBooks(req.body);
+    }
+    @UseGuards(AuthGuard('jwt'))
+    @Get() 
+    findAll(): any {   
+        return this.orderService.findAll();
     }
 }

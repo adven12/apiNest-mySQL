@@ -9,10 +9,17 @@ export class Order extends Model<Order> {
     autoIncrement: true,
     primaryKey: true,
     unique: true,
-    field: '_id',
+    field: 'id',
+
   })
-  _id: Number;
+  id: Number;
+
+  @Column
+  user_id: Number;
   
+  @Column
+  book_id: Number;
+
   @Column
   name: String;
 
@@ -24,4 +31,7 @@ export class Order extends Model<Order> {
 
   @Column
   full_descript: String;
+
+  @Column
+  quantity: Number;
 }
