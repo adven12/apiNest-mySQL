@@ -22,14 +22,13 @@ export class BooksService {
   }
 
   async updateBook(req): Promise<BookResponseModel> {
-      const book = req.body;
+      const book = req.body;      
       await this.BooksRepository.update(book, { where: { _id: req.params.id } })
-
       return { success: true }
   }
 
   async deleteBook(req): Promise<void> {
-      let bookExist = await this.BooksRepository.findOne({where: {_id: req.params.id}})
+      let bookExist = await this.BooksRepository.findOne({where: {_id: req.params.id}})      
       if(!bookExist){
         throw new HttpException('Book does not exist', 400)
       } else await this.BooksRepository.destroyBooks({ where: { _id: req.params.id } })      

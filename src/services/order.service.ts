@@ -17,9 +17,13 @@ export class OrderService {
       await this.OrderBooksRepository.create(books) 
       return { success: true }
     }
-  }
-  async findAll(): Promise<Order[]> {  
-    const orders: any =  await this.OrderBooksRepository.findAll();
+  } 
+  async findAll(user): Promise<Order[]> {  
+    // console.log('111',user.user.isAdmin);
+    let orders: any = []
+    if(user.user.isAdmin != 'admin'){
+      throw new HttpException('You are not admin', 400)
+    } else  orders =  await this.OrderBooksRepository.findAll();      
     console.log('Cheers!');  
     return orders
   }

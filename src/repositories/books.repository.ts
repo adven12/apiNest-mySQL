@@ -9,14 +9,14 @@ export class BooksRepository {
     async findAll(){
         return  this.BOOKS_REPOSITORY.findAll<Book>();
     }
-    async findOne(id: any){
-        return this.BOOKS_REPOSITORY.findOne<Book>({ where: { _id: id }})
+    async findOne(id: any){        
+        return this.BOOKS_REPOSITORY.findOne<Book>( id )
     }
     async update(book: Book, id: any){
-        return this.BOOKS_REPOSITORY.update<Book>(book, { where: { _id: id }})
+        return this.BOOKS_REPOSITORY.update<Book>(book, id)
     }
     async destroyBooks(id: any){
-        return this.BOOKS_REPOSITORY.destroy({ where: { _id: id } })
+        return this.BOOKS_REPOSITORY.destroy(id)
     }
     async create(book: Book){
         return this.BOOKS_REPOSITORY.create<Book>(book)

@@ -22,19 +22,23 @@ export class BooksController {
     }
 
     @UseGuards(AuthGuard('jwt'))
+    @UseGuards(RolesGuard)
     @Put('/:id')
+    @Roles('admin')
     updateBook(@Req() req: Request): any {
         return this.booksService.updateBook(req);
     }
 
     @UseGuards(RolesGuard)
     @Delete('/:id')
-    // @Roles('admin')
+    @Roles('admin')
     deleteBook(@Req() req: Request): any {
         return this.booksService.deleteBook(req);
     }
     @UseGuards(AuthGuard('jwt'))
+    @UseGuards(RolesGuard)
     @Post() 
+    @Roles('admin')
     postBook(@Req() req: Request): Promise<any> {        
         return this.booksService.postBook(req);
     }

@@ -16,9 +16,12 @@ export class OrderController {
     postBooks(@Req() req: Request): Promise<any> {    
         return this.orderService.postBooks(req.body);
     }
+
     @UseGuards(AuthGuard('jwt'))
+    @UseGuards(RolesGuard)
     @Get() 
-    findAll(): any {   
-        return this.orderService.findAll();
+    @Roles('admin')
+    findAll(@Req() req: Request): any { 
+        return this.orderService.findAll(req.user);
     }
 }
